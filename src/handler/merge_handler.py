@@ -3,11 +3,14 @@ import json
 import subprocess
 import concurrent.futures
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip, ColorClip
+from src.client.s3_client import S3Client
 
 # Configuration
 ENCODED_RESOLUTION = "1280x720"
 FRAME_RATE = 30
 THREADS = 4 
+
+aws_client = S3Client()
 
 def check_video_format(input_path):
     """Check if the video format, resolution, and frame rate match the required settings."""
@@ -136,6 +139,9 @@ def stitch_videos_in_folder(folder_path):
         final_video = concatenate_videoclips(clips, method="compose")
         output_path = os.path.join(result_folder, "result.mp4")
         final_video.write_videofile(output_path, codec="libx264", audio_codec="aac")
+        
+        aws_client.upload_to_s3(output_path)
+        
         print(f"✅ Videos stitched successfully! Output: {output_path}")
         return output_path
     else:
