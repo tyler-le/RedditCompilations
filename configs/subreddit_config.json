@@ -1,11 +1,11 @@
 {
     "FunnyAnimals": {
-        "title": "FUNNIEST Pets of the WEEK! \ud83e\udd23 #",
+        "title": "FUNNIEST Pets of the WEEK! \ud83d\udc36\ud83d\ude02 #",
         "description": "Enjoy the funniest animal moments from the FunnyAnimals subreddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 3,
-        "duration_in_seconds": 780
+        "episode": 2,
+        "duration_in_seconds": 600
     },
     "thefinals": {
         "title": "THE FINALS Top Reddit Clips #",
@@ -14,5 +14,37 @@
         "privacy": "private",
         "episode": 1,
         "duration_in_seconds": 10
+    },
+    "MemeVideos": {
+        "title": "FUNNIEST Memes of the WEEK! \ud83d\udd25\ud83d\ude02 #",
+        "description": "Enjoy the funniest memes from Reddit.",
+        "category": "23",
+        "privacy": "private",
+        "episode": 1,
+        "duration_in_seconds": 600
+    },
+    "Unexpected": {
+        "title": "FUNNIEST Unexpected Moments of the WEEK! \ud83d\ude33\ud83d\ude02 #",
+        "description": "Enjoy the funniest unexpected memes from Reddit.",
+        "category": "23",
+        "privacy": "private",
+        "episode": 2,
+        "duration_in_seconds": 600
+    },
+    "AbruptChaos": {
+        "title": "TOP Abrupt Chaos Moments of the WEEK! \ud83d\udca5\ud83d\ude31 #",
+        "description": "Enjoy the most abrupt chaos memes from Reddit.",
+        "category": "23",
+        "privacy": "private",
+        "episode": 1,
+        "duration_in_seconds": 600
+    },
+    "whatcouldgowrong": {
+        "title": "HILARIOUS What Could Go Wrong Moments of the WEEK! \ud83e\uddd0\ud83d\ude48 #",
+        "description": "Enjoy the best what could go wrong moments from Reddit.",
+        "category": "23",
+        "privacy": "private",
+        "episode": 1,
+        "duration_in_seconds": 600
     }
 }
