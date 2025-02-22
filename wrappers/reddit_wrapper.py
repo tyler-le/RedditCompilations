@@ -49,8 +49,7 @@ class RedditWrapper:
         """Fetch and download videos while respecting Reddit's API limits."""
         # Create folder for saving the downloaded videos
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
-        download_folder = f"/Users/tylerle/Desktop/yt-reddit-scraper/output/{timestamp}"
-
+        download_folder = os.path.join("/Users/tylerle/Desktop/yt-reddit-scraper/output", subreddit_name, timestamp)
         # Initialize total video duration and downloaded count
         total_duration = 0
         downloaded_count = 0
@@ -63,7 +62,7 @@ class RedditWrapper:
             print(f"🎬 Found video: {post.title}")
 
             duration = self.get_video_duration(post.url)
-            if duration == 0 or duration > 45:
+            if duration == 0 or duration > 30:
                 print(f"⚠️ Skipping {post.url} (duration unknown or too long)")
                 continue
             
@@ -99,6 +98,7 @@ class RedditWrapper:
                     ydl.download([url])
                 print(f"✅ Downloaded: {url}")
                 ConfigManager.save_metadata(folder, filename, title)
+                time.sleep(2)
                 return True
             except Exception as e:
                 print(f"❌ Attempt {attempt} failed for {url} | Error: {e}")
