@@ -14,7 +14,7 @@ def authenticate_youtube():
 
     # Use a fixed port (8080) to avoid dynamic redirect URI
     flow = InstalledAppFlow.from_client_secrets_file(
-        '../config.json', SCOPES)
+        '/Users/tylerle/Desktop/yt-reddit-scraper/configs/config.json', SCOPES)
     
     # Here, we are fixing the redirect URI with a specific port (8080)
     credentials = flow.run_local_server(port=8080)  # Use port 8080 for fixed redirect URI
@@ -38,7 +38,7 @@ def upload_video(youtube, file_path, title, description, category, privacy_statu
                     "title": title,
                     "description": description,
                     "tags": ["video", "youtube", "upload"],
-                    "categoryId": category_id
+                    "videoCategoryId": category_id
                 },
                 "status": {
                     "privacyStatus": privacy_status  # 'public', 'private', 'unlisted'

@@ -1,0 +1,18 @@
+{
+    "FunnyAnimals": {
+        "title": "FUNNIEST Pets of the WEEK! \ud83e\udd23 #",
+        "description": "Enjoy the funniest animal moments from the FunnyAnimals subreddit.",
+        "category": "23",
+        "privacy": "private",
+        "episode": 3,
+        "duration_in_seconds": 780
+    },
+    "thefinals": {
+        "title": "THE FINALS Top Reddit Clips #",
+        "description": "Relax with the best nature videos from the NaturePics subreddit.",
+        "category": "20",
+        "privacy": "private",
+        "episode": 1,
+        "duration_in_seconds": 10
+    }
+}
