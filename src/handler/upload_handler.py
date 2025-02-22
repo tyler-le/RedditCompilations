@@ -1,5 +1,3 @@
-import sys
-import google.auth
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -13,8 +11,7 @@ def authenticate_youtube():
     print("Current working directory:", os.getcwd())
 
     # Use a fixed port (8080) to avoid dynamic redirect URI
-    flow = InstalledAppFlow.from_client_secrets_file(
-        '/Users/tylerle/Desktop/yt-reddit-scraper/configs/config.json', SCOPES)
+    flow = InstalledAppFlow.from_client_secrets_file('src/configs/config.json', SCOPES)
     
     # Here, we are fixing the redirect URI with a specific port (8080)
     credentials = flow.run_local_server(port=8080)  # Use port 8080 for fixed redirect URI
@@ -66,17 +63,3 @@ def upload_video_from_path(file_path, title, description, category, privacy_stat
     """Authenticate and upload a video using the file path."""
     youtube = authenticate_youtube()
     return upload_video(youtube, file_path, title, description, category, privacy_status)
-
-if __name__ == "__main__":
-    if len(sys.argv) != 6:
-        print("Usage: python script.py <file_path> <title> <description> <category> <privacy_status>")
-        sys.exit(1)
-
-    file_path = sys.argv[1]
-    title = sys.argv[2]
-    description = sys.argv[3]
-    category = sys.argv[4]  # Ensure this is a valid YouTube category ID
-    privacy_status = sys.argv[5]  # 'public', 'private', or 'unlisted'
-
-    # Upload video when the script is executed directly
-    upload_video_from_path(file_path, title, description, category, privacy_status)

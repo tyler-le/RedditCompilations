@@ -141,16 +141,3 @@ def stitch_videos_in_folder(folder_path):
     else:
         print("⚠️ No valid video clips to merge.")
         return None
-
-
-def main():
-    """Main function to call the merge process."""
-    folder_path = input("Enter the path to the downloaded videos folder: ").strip()
-    if os.path.exists(folder_path):
-        stitch_videos_in_folder(folder_path)
-    else:
-        print("❌ Error: Folder not found!")
-
-
-if __name__ == "__main__":
-    main()

@@ -3,7 +3,7 @@ import praw
 import yt_dlp
 import time
 from dotenv import load_dotenv
-from managers.config_manager import ConfigManager
+from src.managers.config_manager import ConfigManager
 
 
 class RedditWrapper:

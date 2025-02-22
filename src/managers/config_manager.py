@@ -2,7 +2,7 @@ import json
 import os
 
 class ConfigManager:
-    config_path = "/Users/tylerle/Desktop/yt-reddit-scraper/configs/subreddit_config.json"
+    config_path = "src/configs/subreddit_config.json"
 
     @staticmethod
     def load_subreddit_config():
