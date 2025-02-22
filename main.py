@@ -23,6 +23,5 @@ if __name__ == "__main__":
     output_path = stitch_videos_in_folder(download_folder)
     
     # Step 5: Upload video to YouTube
-    # video_link = upload_video_from_path(output_path, title, description, category, privacy)
-    
-    # print(f"✅ Video uploaded to {video_link}")
+    video_link = upload_video_from_path(output_path, title, description, category, privacy)
+    print(f"✅ Video uploaded to {video_link}")
