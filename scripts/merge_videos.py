@@ -94,7 +94,7 @@ def add_text_overlay(video_clip, text):
 def stitch_videos_in_folder(folder_path):
     """Stitches all videos in the folder into a single output video with text overlays."""
     print(f"Stitching videos from folder: {folder_path}...")
-    video_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.mp4', '.mov', '.avi', '.mkv'))]
+    video_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.mp4'))]
     if not video_files:
         print("⚠️ No video files found.")
         return None

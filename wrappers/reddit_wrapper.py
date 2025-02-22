@@ -70,7 +70,7 @@ class RedditWrapper:
                 print(f"⏹️ Stopping downloads: Reached {total_duration / 60:.2f} min of videos")
                 break
 
-            self.download_video(post.url, download_folder, post.title, self.MAX_RETRIES)
+            self.download_video(post.url, download_folder, post.title, downloaded_count, self.MAX_RETRIES)
             total_duration += duration
             downloaded_count += 1
 
@@ -78,10 +78,9 @@ class RedditWrapper:
         print(f"📂 Videos saved in: {download_folder}")
         return download_folder
 
-    def download_video(self, url, folder, title, max_retries):
+    def download_video(self, url, folder, title, download_count, max_retries):
         """Download MP4 video with audio using yt-dlp."""
-        sanitized_title = title.replace(" ", "_")  # Using basic string replace for simplicity
-        filename = f"{sanitized_title}.mp4"
+        filename = f"{download_count}.mp4"
         output_path = f"{folder}/{filename}"
 
         ydl_opts = {
@@ -98,7 +97,7 @@ class RedditWrapper:
                     ydl.download([url])
                 print(f"✅ Downloaded: {url}")
                 ConfigManager.save_metadata(folder, filename, title)
-                time.sleep(2)
+                time.sleep(.5)
                 return True
             except Exception as e:
                 print(f"❌ Attempt {attempt} failed for {url} | Error: {e}")
