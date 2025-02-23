@@ -4,7 +4,7 @@
         "description": "Enjoy the funniest animal moments from the FunnyAnimals subreddit.",
         "category": "23",
         "privacy": "public",
-        "episode": 2,
+        "episode": 3,
         "duration_in_seconds": 600,
         "publish_day": "Monday"
     },
@@ -13,7 +13,7 @@
         "description": "Enjoy the funniest memes from Reddit.",
         "category": "23",
         "privacy": "public",
-        "episode": 2,
+        "episode": 1,
         "duration_in_seconds": 600,
         "publish_day": "Tuesday"
     },
@@ -31,7 +31,7 @@
         "description": "Enjoy the funniest unexpected memes from Reddit.",
         "category": "23",
         "privacy": "public",
-        "episode": 2,
+        "episode": 1,
         "duration_in_seconds": 600,
         "publish_day": "Thursday"
     },
@@ -49,7 +49,7 @@
         "description": "Enjoy the dumbest idiots in cars from Reddit.",
         "category": "23",
         "privacy": "public",
-        "episode": 2,
+        "episode": 1,
         "duration_in_seconds": 600,
         "publish_day": "Saturday"
     },

@@ -27,7 +27,7 @@ class RedditWrapper:
             user_agent=self.USER_AGENT
         )
         
-        self.MAX_RETRIES = 3
+        self.MAX_RETRIES = 10
 
     def get_video_duration(self, url):
         """Retrieve video duration using yt-dlp (returns duration in seconds)."""
@@ -49,7 +49,8 @@ class RedditWrapper:
         """Fetch and download videos while respecting Reddit's API limits."""
         # Create folder for saving the downloaded videos
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
-        download_folder = os.path.join("/Users/tylerle/Desktop/yt-reddit-scraper/output", subreddit_name, timestamp)
+        download_folder = os.path.join("output", subreddit_name, timestamp)
+        
         # Initialize total video duration and downloaded count
         total_duration = 0
         downloaded_count = 0
@@ -73,6 +74,7 @@ class RedditWrapper:
             self.download_video(post.url, download_folder, post.title, downloaded_count, self.MAX_RETRIES)
             total_duration += duration
             downloaded_count += 1
+            time.sleep(.5)
 
         print(f"✅ Total videos downloaded: {downloaded_count} ({total_duration / 60:.2f} min)")
         print(f"📂 Videos saved in: {download_folder}")
@@ -97,7 +99,6 @@ class RedditWrapper:
                     ydl.download([url])
                 print(f"✅ Downloaded: {url}")
                 ConfigManager.save_metadata(folder, filename, title)
-                time.sleep(.5)
                 return True
             except Exception as e:
                 print(f"❌ Attempt {attempt} failed for {url} | Error: {e}")
