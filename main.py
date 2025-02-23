@@ -12,14 +12,16 @@ if __name__ == "__main__":
     subreddit_name = args.subreddit_name
     
     # Step 2: Fetch subreddit details from the config (title, description, etc.)
-    title, description, category, privacy, episode, duration_in_seconds = ConfigManager.get_subreddit_details(subreddit_name)
-    
+    subreddit_details = ConfigManager.get_video_details(subreddit_name)
+
     # Step 3: Call fetch_top_videos from RedditWrapper to download the videos
-    download_folder = download_controller(subreddit_name, duration_in_seconds)
+    download_folder = download_controller(subreddit_name, subreddit_details['duration_in_seconds'])
     
     # Step 4: Stitch and re-encode downloaded videos
     output_path = merge_controller(download_folder)
     
     # Step 5: Upload video to YouTube
-    video_link = upload_controller(output_path, title, description, category, privacy)
+    # video_link = upload_controller(output_path, title, description, category, privacy, upload_date)
+    video_link = upload_controller(output_path, subreddit_details)
+
     print(f"✅ Video uploaded to {video_link}")

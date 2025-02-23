@@ -1,5 +1,6 @@
 import json
 import os
+from src.util.scheduler import get_next_weekday
 
 class ConfigManager:
     config_path = "src/configs/subreddit_config.json"
@@ -38,7 +39,7 @@ class ConfigManager:
         return new_episode
     
     @staticmethod
-    def get_subreddit_details(subreddit_name):
+    def get_video_details(subreddit_name):
         """Get the details for a specific subreddit from the config."""
         config = ConfigManager.load_subreddit_config()
         
@@ -50,15 +51,22 @@ class ConfigManager:
         # Get the incremented episode number
         episode = ConfigManager.increment_episode(subreddit_name) - 1
         
-        # Generate title with episode
+        # Dynamically generate the title with episode
         title = f"{subreddit_config.get('title')}{episode}"
-        description = subreddit_config.get("description")
-        category = subreddit_config.get("category")
-        privacy = subreddit_config.get("privacy", "private")  
-        duration_in_seconds = subreddit_config.get("duration_in_seconds", 780)  # default to 780s (13 minutes)
+        
+        # Create a dictionary of all subreddit details
+        video_details = {
+            'title': title,
+            'description': subreddit_config.get("description"),
+            'category': subreddit_config.get("category"),
+            'privacy': subreddit_config.get("privacy", "private"),
+            'episode': episode,
+            'duration_in_seconds': subreddit_config.get("duration_in_seconds", 600) ,
+            'publish_day': get_next_weekday(subreddit_config.get("publish_day"))
+        }
 
-        # Return the values
-        return title, description, category, privacy, episode, duration_in_seconds
+        # Return the dictionary containing the subreddit details
+        return video_details
 
     @staticmethod
     def save_metadata(folder, filename, title):

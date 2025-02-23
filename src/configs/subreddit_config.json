@@ -1,50 +1,65 @@
 {
     "FunnyAnimals": {
-        "title": "FUNNIEST Pets of the WEEK! \ud83d\udc36\ud83d\ude02 #",
+        "title": "FUNNIEST Pets That Will Make You Cry Laughing! 😂🐾 #",
         "description": "Enjoy the funniest animal moments from the FunnyAnimals subreddit.",
         "category": "23",
-        "privacy": "private",
+        "privacy": "public",
         "episode": 2,
-        "duration_in_seconds": 600
-    },
-    "thefinals": {
-        "title": "THE FINALS Top Reddit Clips #",
-        "description": "Relax with the best nature videos from the NaturePics subreddit.",
-        "category": "20",
-        "privacy": "private",
-        "episode": 1,
-        "duration_in_seconds": 10
+        "duration_in_seconds": 600,
+        "publish_day": "Monday"
     },
     "MemeVideos": {
-        "title": "FUNNIEST Memes of the WEEK! \ud83d\udd25\ud83d\ude02 #",
+        "title": "UNUSUAL Memes That Make ZERO Sense (But Are HILARIOUS) 🤣🔥 #",
         "description": "Enjoy the funniest memes from Reddit.",
         "category": "23",
-        "privacy": "private",
+        "privacy": "public",
         "episode": 2,
-        "duration_in_seconds": 10
+        "duration_in_seconds": 600,
+        "publish_day": "Tuesday"
+    },
+    "WinStupidPrizes": {
+        "title": "PLAY STUPID GAMES, WIN STUPID PRIZES 🤦‍♂️😂 #",
+        "description": "Clips of people making dumb decisions and getting instant karma.",
+        "category": "23",
+        "privacy": "public",
+        "episode": 1,
+        "duration_in_seconds": 600,
+        "publish_day": "Wednesday"
     },
     "Unexpected": {
-        "title": "FUNNIEST Unexpected Moments of the WEEK! \ud83d\ude33\ud83d\ude02 #",
+        "title": "Most UNEXPECTED Moments EVER Caught on Camera! 😆🤯 #",
         "description": "Enjoy the funniest unexpected memes from Reddit.",
         "category": "23",
-        "privacy": "private",
+        "privacy": "public",
         "episode": 2,
-        "duration_in_seconds": 600
-    },
-    "AbruptChaos": {
-        "title": "TOP Abrupt Chaos Moments of the WEEK! \ud83d\udca5\ud83d\ude31 #",
-        "description": "Enjoy the most abrupt chaos memes from Reddit.",
-        "category": "23",
-        "privacy": "private",
-        "episode": 1,
-        "duration_in_seconds": 600
+        "duration_in_seconds": 600,
+        "publish_day": "Thursday"
     },
     "whatcouldgowrong": {
-        "title": "HILARIOUS What Could Go Wrong Moments of the WEEK! \ud83e\uddd0\ud83d\ude48 #",
+        "title": "DISASTROUS What Could Go Wrong Moments \ud83e\uddd0\ud83d\ude48 #",
         "description": "Enjoy the best what could go wrong moments from Reddit.",
         "category": "23",
-        "privacy": "private",
+        "privacy": "public",
         "episode": 1,
-        "duration_in_seconds": 30
+        "duration_in_seconds": 600,
+        "publish_day": "Friday"
+    },
+    "IdiotsInCars": {
+        "title": "DUMBEST Drivers on the Road! 🤦‍♂️🚗💥 #",
+        "description": "Enjoy the dumbest idiots in cars from Reddit.",
+        "category": "23",
+        "privacy": "public",
+        "episode": 2,
+        "duration_in_seconds": 600,
+        "publish_day": "Saturday"
+    },
+    "PublicFreakout": {
+        "title": "WILD Public Freakouts You HAVE to See to Believe! 😳🔥 #",
+        "description": "Insane meltdowns, unexpected confrontations, viral freakouts.",
+        "category": "23",
+        "privacy": "public",
+        "episode": 1,
+        "duration_in_seconds": 600,
+        "publish_day": "Sunday"
     }
 }

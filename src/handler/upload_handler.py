@@ -19,9 +19,10 @@ def authenticate_youtube():
     youtube = build('youtube', 'v3', credentials=credentials)
     return youtube
 
-def upload_video(youtube, file_path, title, description, category, privacy_status):
+def upload_video(youtube, file_path, subreddit_details):
     """Upload a video to YouTube."""
     print(f"👀 Attempting to upload video at {file_path} to YouTube")
+    title, description, category, privacy, episode, duration_in_seconds, upload_date = subreddit_details.values()
     
     try:
         # Validate the category to ensure it is a valid YouTube category ID
@@ -34,11 +35,11 @@ def upload_video(youtube, file_path, title, description, category, privacy_statu
                 "snippet": {
                     "title": title,
                     "description": description,
-                    "tags": ["video", "youtube", "upload"],
                     "videoCategoryId": category_id
                 },
                 "status": {
-                    "privacyStatus": privacy_status  # 'public', 'private', 'unlisted'
+                    "privacyStatus": privacy,  
+                    "publishAt": upload_date
                 }
             },
             media_body=file_path
@@ -59,7 +60,7 @@ def upload_video(youtube, file_path, title, description, category, privacy_statu
         print(f"Unexpected error: {e}")
         return None
 
-def upload_video_from_path(file_path, title, description, category, privacy_status):
+def upload_video_from_path(file_path, subreddit_details):
     """Authenticate and upload a video using the file path."""
-    youtube = authenticate_youtube()
-    return upload_video(youtube, file_path, title, description, category, privacy_status)
+    youtube = authenticate_youtube() 
+    return upload_video(youtube, file_path, subreddit_details)
