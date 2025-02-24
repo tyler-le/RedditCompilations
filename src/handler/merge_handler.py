@@ -136,9 +136,9 @@ def stitch_videos_in_folder(folder_path):
             print(f"❌ Error processing {video_path}: {e}")
 
     if clips:
-        final_video = concatenate_videoclips(clips, method="compose")
+        final_video = concatenate_videoclips(clips, method="chain")
         output_path = os.path.join(result_folder, "result.mp4")
-        final_video.write_videofile(output_path, codec="libx264", audio_codec="aac")
+        final_video.write_videofile(output_path, codec="libx264", audio_codec="aac", preset="ultrafast", threads=4)
         
         aws_client.upload_to_s3(output_path)
         
