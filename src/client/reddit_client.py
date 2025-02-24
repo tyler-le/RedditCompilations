@@ -92,9 +92,6 @@ class RedditWrapper:
 
         ydl_opts = {
             "outtmpl": output_path,
-            "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
-            "merge_output_format": "mp4",
-            "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
             "quiet": True,
             "retries": 10,
         }
