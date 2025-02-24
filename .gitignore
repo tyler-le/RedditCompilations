@@ -4,3 +4,4 @@ __pycache__/
 config.json
 output
 id_rsa.pem
+.vscode
