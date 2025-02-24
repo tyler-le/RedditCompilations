@@ -1,7 +1,10 @@
+import json
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import os
+
+from src.util.upload_scheduler_util import UploadSchedulerUtil
 
 # OAuth 2.0 Scopes
 SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
@@ -23,9 +26,8 @@ def upload_video(youtube, file_path, subreddit_details):
     """Upload a video to YouTube."""
     print(f"👀 Attempting to upload video at {file_path} to YouTube")
     title, description, category, privacy, episode, duration_in_seconds, upload_date = subreddit_details.values()
-    
+    title = f"{title}{episode}"
     try:
-        # Validate the category to ensure it is a valid YouTube category ID
         category_id = str(category)  # Ensure category is a string of a valid YouTube category ID
         
         # Call the API's videos.insert method to upload the video
@@ -39,7 +41,8 @@ def upload_video(youtube, file_path, subreddit_details):
                 },
                 "status": {
                     "privacyStatus": privacy,  
-                    "publishAt": upload_date
+                    "publishAt": UploadSchedulerUtil.get_next_weekday(upload_date),
+                    "madeForKids": False
                 }
             },
             media_body=file_path
@@ -60,7 +63,6 @@ def upload_video(youtube, file_path, subreddit_details):
         print(f"Unexpected error: {e}")
         return None
 
-def upload_video_from_path(file_path, subreddit_details):
+def upload_video_from_path(file_path, subreddit_details, youtube_credentials):
     """Authenticate and upload a video using the file path."""
-    youtube = authenticate_youtube() 
-    return upload_video(youtube, file_path, subreddit_details)
+    return upload_video(youtube_credentials, file_path, subreddit_details)

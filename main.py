@@ -1,38 +1,31 @@
-import argparse
-from concurrent.futures import ThreadPoolExecutor
+import json
+from src.constants.constants import BATCH_UPLOAD_PATH, DURATION_IN_SECONDS_KEY, OUTPUT_PATH_KEY, UPLOAD_DETAILS_KEY
 from src.controller.download_controller import download_controller
 from src.controller.merge_controller import merge_controller
-from src.controller.upload_controller import upload_controller
-from src.managers.config_manager import ConfigManager
+from src.util.config_util import ConfigUtil
 
-if __name__ == "__main__":
-    # Step 1: Get arguments passed in command line
-    parser = argparse.ArgumentParser(description="Download videos from subreddits and upload to YouTube.")
-    parser.add_argument("subreddit_names", nargs='+', help="List of subreddits to fetch videos from")
-    args = parser.parse_args()    
-    subreddit_names = args.subreddit_names
-    
-    batch_upload = []
-    for subreddit_name in subreddit_names:
-        # Step 2: Fetch subreddit details from the config (title, description, etc.)
-        upload_details = ConfigManager.get_video_details(subreddit_name)
+if __name__ == "__main__":  
+    # Step 1: Load the subreddit configs
+    subreddit_details = ConfigUtil.load_subreddit_config()  
+    batch_uploads = []
 
-        # Step 3: Call fetch_top_videos from RedditWrapper to download the videos
-        download_folder = download_controller(subreddit_name, upload_details['duration_in_seconds'])
-        
-        # Step 4: Stitch and re-encode downloaded videos
-        output_path = merge_controller(download_folder)
-        
-        # Step 5: Add to batch
-        batch_upload.append([output_path, upload_details])
-    
-    # Step 6: Batch upload the videos
-    with ThreadPoolExecutor(max_workers=10) as executor:  # Adjust max_workers based on your system's capacity
-        futures = []
-        for path, video_details in batch_upload:
-            future = executor.submit(upload_controller, path, video_details)
-            futures.append(future)   
+    for subreddit_name, upload_details in subreddit_details.items():
+        try:
+            # Step 2: Call fetch_top_videos from RedditWrapper to download the videos
+            download_folder = download_controller(subreddit_name, upload_details[DURATION_IN_SECONDS_KEY])
+            
+            # Step 3: Stitch and re-encode downloaded videos
+            output_path = merge_controller(download_folder)
+            
+            # Step 4: Add to batch
+            batch_uploads.append({OUTPUT_PATH_KEY: output_path, UPLOAD_DETAILS_KEY: upload_details})
+            
+            # Step 5: Increment episode for next time
+            ConfigUtil.increment_episode(subreddit_name)
 
-        # Wait for all tasks to complete
-        for future in futures:
-            future.result()
+        except Exception as e:
+            print(f"Error processing {subreddit_name}: {e}")
+
+    # Step 5: Write the batch upload details to a file
+    with open(BATCH_UPLOAD_PATH, "w") as f:
+        json.dump(batch_uploads, f)

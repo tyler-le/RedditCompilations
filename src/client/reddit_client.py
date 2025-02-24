@@ -1,10 +1,11 @@
 import os
+from src.constants.constants import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USER_AGENT
 import praw
 import yt_dlp
 import time
 from dotenv import load_dotenv
-from src.managers.config_manager import ConfigManager
-
+from src.util.config_util import ConfigUtil
+import random
 
 class RedditWrapper:
     def __init__(self):
@@ -13,9 +14,9 @@ class RedditWrapper:
         load_dotenv()
 
         # Fetch Reddit API credentials from environment variables
-        self.CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
-        self.CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-        self.USER_AGENT = os.getenv("REDDIT_USER_AGENT", "my_bot/1.0")
+        self.CLIENT_ID = os.getenv(REDDIT_CLIENT_ID)
+        self.CLIENT_SECRET = os.getenv(REDDIT_CLIENT_SECRET)
+        self.USER_AGENT = os.getenv(REDDIT_USER_AGENT, "my_bot/1.0")
 
         if not self.CLIENT_ID or not self.CLIENT_SECRET:
             raise ValueError("Missing Reddit API credentials. Set them in the .env file.")
@@ -27,8 +28,6 @@ class RedditWrapper:
             user_agent=self.USER_AGENT
         )
         
-        self.MAX_RETRIES = 10
-
     def get_video_duration(self, url):
         """Retrieve video duration using yt-dlp (returns duration in seconds)."""
         ydl_opts = {
@@ -71,16 +70,22 @@ class RedditWrapper:
                 print(f"⏹️ Stopping downloads: Reached {total_duration / 60:.2f} min of videos")
                 break
 
-            self.download_video(post.url, download_folder, post.title, downloaded_count, self.MAX_RETRIES)
-            total_duration += duration
-            downloaded_count += 1
-            time.sleep(.5)
+            if self.download_video(post.url, download_folder, post.title, downloaded_count):
+                print(f"Downloaded video #{downloaded_count} - {post.title} with a duration of {duration}")
+                total_duration += duration
+                downloaded_count += 1
+                print(f"🕦 Current total duration (in seconds): {total_duration}")
+            else:
+                print(f"Unable to download video {post.title} with a duration of {duration}")
+
+            time.sleep(2)
+            
 
         print(f"✅ Total videos downloaded: {downloaded_count} ({total_duration / 60:.2f} min)")
         print(f"📂 Videos saved in: {download_folder}")
         return download_folder
 
-    def download_video(self, url, folder, title, download_count, max_retries):
+    def download_video(self, url, folder, title, download_count):
         """Download MP4 video with audio using yt-dlp."""
         filename = f"{download_count}.mp4"
         output_path = f"{folder}/{filename}"
@@ -90,21 +95,18 @@ class RedditWrapper:
             "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
             "merge_output_format": "mp4",
             "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
-            "quiet": False
+            "quiet": True,
+            "retries": 10,
         }
 
-        for attempt in range(1, max_retries + 1):
-            try:
-                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([url])
-                print(f"✅ Downloaded: {url}")
-                ConfigManager.save_metadata(folder, filename, title)
-                return True
-            except Exception as e:
-                print(f"❌ Attempt {attempt} failed for {url} | Error: {e}")
-                time.sleep(3)
-
-        print(f"⏹️ Skipping {url} after {max_retries} failed attempts.")
-        return False
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            print(f"✅ Downloaded: {url}")
+            ConfigUtil.save_metadata(folder, filename, title)
+            return True
+        except Exception as e:
+            print(f"❌ Download failed for {url} | Error: {e}")
+            return False
 
 
