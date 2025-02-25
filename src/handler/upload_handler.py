@@ -17,7 +17,7 @@ def authenticate_youtube():
     flow = InstalledAppFlow.from_client_secrets_file('src/configs/config.json', SCOPES)
     
     # Here, we are fixing the redirect URI with a specific port (8080)
-    credentials = flow.run_local_server(port=8080)  # Use port 8080 for fixed redirect URI
+    credentials = flow.run_local_server(port=8080, open_browser=False)  # Use port 8080 for fixed redirect URI
     
     youtube = build('youtube', 'v3', credentials=credentials)
     return youtube

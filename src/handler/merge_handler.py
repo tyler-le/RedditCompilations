@@ -4,7 +4,9 @@ import subprocess
 import concurrent.futures
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip, ColorClip
 from src.client.s3_client import S3Client
+from moviepy.config import change_settings
 
+change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
 # Configuration
 ENCODED_RESOLUTION = "1280x720"
 FRAME_RATE = 30
