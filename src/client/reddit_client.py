@@ -1,12 +1,10 @@
 import os
 from src.constants.constants import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USER_AGENT
 import praw
-import yt_dlp
 import time
 from dotenv import load_dotenv
 from src.util.config_util import ConfigUtil
-import random
-
+import subprocess
 class RedditWrapper:
     def __init__(self):
         """Initialize Reddit API client and load environment variables."""
@@ -30,17 +28,14 @@ class RedditWrapper:
         
     def get_video_duration(self, url):
         """Retrieve video duration using yt-dlp (returns duration in seconds)."""
-        ydl_opts = {
-            "quiet": True,
-            "skip_download": True,
-            "no_warnings": True,
-            "force_generic_extractor": False
-        }
+        cookies_path = os.path.expanduser("~/yt-reddit-scraper/cookies.txt")  # Expanding the ~ to full path
+        command = ['yt-dlp', '--cookies', cookies_path, '--get-duration', url]
+        
         try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=False)
-                return info.get("duration", 0)
-        except Exception as e:
+            # Run the command and capture the output
+            result = subprocess.run(command, capture_output=True, text=True, check=True)
+            return int(result.stdout.strip())
+        except subprocess.CalledProcessError as e:
             print(f"⚠️ Failed to get duration for {url}: {e}")
             return 0
 
@@ -90,20 +85,23 @@ class RedditWrapper:
         filename = f"{download_count}.mp4"
         output_path = f"{folder}/{filename}"
 
-        ydl_opts = {
-            "outtmpl": output_path,
-            "quiet": True,
-            "retries": 10,
-        }
-
+        cookies_path = os.path.expanduser("~/yt-reddit-scraper/cookies.txt")  # Expanding the ~ to full path
+        command = [
+            'yt-dlp',
+            '--cookies', cookies_path,
+            '--output', output_path,
+            '--quiet',
+            '--retries', '10',
+            url
+        ]
+        
         try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
+            # Run the command to download the video
+            subprocess.run(command, check=True)
             print(f"✅ Downloaded: {url}")
             ConfigUtil.save_metadata(folder, filename, title)
             return True
-        except Exception as e:
+        except subprocess.CalledProcessError as e:
             print(f"❌ Download failed for {url} | Error: {e}")
             return False
-
 
