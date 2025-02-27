@@ -1,5 +1,5 @@
 import sys
-from src.handler.upload_handler import upload_video_from_path
+from src.handler.upload_handler import upload_video
 
 def upload_controller(file_path, upload_details, youtube_credentials):
     """Controller function to upload a video."""
@@ -7,4 +7,4 @@ def upload_controller(file_path, upload_details, youtube_credentials):
         print("Error: Missing required parameters")
         sys.exit(1)
 
-    return upload_video_from_path(file_path, upload_details, youtube_credentials)
+    return upload_video(youtube_credentials, file_path, upload_details)

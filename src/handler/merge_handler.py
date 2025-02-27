@@ -6,9 +6,9 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 from src.client.s3_client import S3Client
 
 # Configuration
-ENCODED_RESOLUTION = "1280x720"
+ENCODED_RESOLUTION = "1920x1080"
 FRAME_RATE = 30
-THREADS = 4 
+THREADS = 8 
 
 aws_client = S3Client()
 
@@ -24,7 +24,7 @@ def check_video_format(input_path):
         width, height = map(int, output[0].split(",")[:2])  # Extract width and height
         frame_rate = round(eval(output[0].split(",")[2]))  # Convert frame rate to integer
 
-        if (width, height) == (1280, 720) and frame_rate == FRAME_RATE:
+        if (width, height) == (1920, 1080) and frame_rate == FRAME_RATE:
             print(f"✅ {input_path} is already in the correct format.")
             return True
         else:
@@ -39,12 +39,13 @@ def reencode_video(input_path, output_path):
     """Re-encode video to ensure uniform format with black bars if needed."""
     print(f"Re-encoding {input_path}...")
     command = [
-        "ffmpeg", "-i", input_path,
-        "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k",
-        "-preset", "fast", "-r", str(FRAME_RATE), "-s", ENCODED_RESOLUTION,
-        "-vf", "scale=-1:720,pad=1280:720:(ow-iw)/2:(oh-ih)/2",  # Add black bars
-        "-strict", "experimental", output_path, "-y"
-    ]
+    "ffmpeg", "-i", input_path,
+    "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k",
+    "-preset", "fast", "-r", str(FRAME_RATE),
+    "-vf", "scale=w=1920:h=1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2",
+    "-strict", "experimental", output_path, "-y"
+]
+
     try:
         subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         print(f"✅ {input_path} re-encoded successfully.")
@@ -56,6 +57,7 @@ def reencode_video(input_path, output_path):
 
 def reencode_video_concurrent(input_path, output_folder):
     """Helper function to handle re-encoding in parallel."""
+    # Add check_video_format check to not reencode videos when the resolution matches 
     reencoded_path = os.path.join(output_folder, f"reencoded_{os.path.basename(input_path)}")
     return reencode_video(input_path, reencoded_path)
 

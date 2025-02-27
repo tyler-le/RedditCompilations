@@ -22,6 +22,9 @@ def authenticate_youtube():
     youtube = build('youtube', 'v3', credentials=credentials)
     return youtube
 
+def upload_video_from_s3(youtube, bucket, subreddit_details):
+    pass
+
 def upload_video(youtube, file_path, subreddit_details):
     """Upload a video to YouTube."""
     print(f"👀 Attempting to upload video at {file_path} to YouTube")
@@ -62,7 +65,3 @@ def upload_video(youtube, file_path, subreddit_details):
     except Exception as e:
         print(f"Unexpected error: {e}")
         return None
-
-def upload_video_from_path(file_path, subreddit_details, youtube_credentials):
-    """Authenticate and upload a video using the file path."""
-    return upload_video(youtube_credentials, file_path, subreddit_details)

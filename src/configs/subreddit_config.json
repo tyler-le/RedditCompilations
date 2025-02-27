@@ -1,19 +1,19 @@
 {
     "FunnyAnimals": {
-        "title": "FUNNIEST Pets That Will Make You Cry Laughing! \ud83d\ude02\ud83d\udc3e #",
+        "title": "FUNNIEST PETS THAT WILL MAKE YOU CRY LAUGHING! \ud83d\udc36\ud83d\ude02 #",
         "description": "Enjoy the funniest animal moments from the FunnyAnimals subreddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Monday"
     },
     "MemeVideos": {
-        "title": "UNUSUAL Memes That Make ZERO Sense (But Are HILARIOUS) \ud83e\udd23\ud83d\udd25 #",
+        "title": "UNUSUAL MEMES THAT MAKE ZERO SENSE (But Are HILARIOUS) \ud83e\udd23\ud83d\udd25 #",
         "description": "Enjoy the funniest memes from Reddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Tuesday"
     },
@@ -22,16 +22,16 @@
         "description": "Clips of people making dumb decisions and getting instant karma.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Wednesday"
     },
     "Unexpected": {
-        "title": "Most UNEXPECTED Moments EVER Caught on Camera! \ud83d\ude06\ud83e\udd2f #",
+        "title": "MOST UNEXPECTED MOMENTS EVER Caught on Camera! \ud83d\ude06\ud83e\udd2f #",
         "description": "Enjoy the funniest unexpected memes from Reddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Thursday"
     },
@@ -40,16 +40,16 @@
         "description": "Enjoy the best instant regret moments from Reddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Friday"
     },
     "IdiotsInCars": {
-        "title": "DUMBEST Drivers on the Road! \ud83e\udd26\u200d\u2642\ufe0f\ud83d\ude97\ud83d\udca5 #",
+        "title": "DUMBEST DRIVERS ON THE ROAD! \ud83e\udd26\u200d\u2642\ufe0f\ud83d\ude97\ud83d\udca5 #",
         "description": "Enjoy the dumbest idiots in cars from Reddit.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Saturday"
     },
@@ -58,7 +58,7 @@
         "description": "Insane meltdowns, unexpected confrontations, viral freakouts.",
         "category": "23",
         "privacy": "private",
-        "episode": 1,
+        "episode": 2,
         "duration_in_seconds": 600,
         "publish_day": "Sunday"
     }
