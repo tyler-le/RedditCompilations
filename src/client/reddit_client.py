@@ -73,7 +73,7 @@ class RedditWrapper:
             else:
                 print(f"Unable to download video {post.title} with a duration of {duration}")
 
-            time.sleep(2)
+            time.sleep(3)
             
 
         print(f"✅ Total videos downloaded: {downloaded_count} ({total_duration / 60:.2f} min)")
