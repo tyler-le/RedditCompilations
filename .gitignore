@@ -6,3 +6,4 @@ output
 id_rsa.pem
 .vscode
 cookies.txt
+venv
