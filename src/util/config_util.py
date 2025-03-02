@@ -3,25 +3,29 @@ import os
 from src.constants.constants import CREATE_CONFIG_CHOICE, LOAD_CONFIG_CHOICE, CONFIG_DIR
 
 class ConfigUtil:
-    config_path = "src/configs/subreddit_config.json"
+    _instance = None  # Class variable to hold the instance
 
-    @staticmethod
-    def load_subreddit_config(path=config_path):
+    def __new__(cls, config_path="src/configs/subreddit_config.json"):
+        """Override the __new__ method to implement Singleton pattern."""
+        if cls._instance is None:
+            cls._instance = super(ConfigUtil, cls).__new__(cls)
+            cls._instance.config_path = config_path
+        return cls._instance
+
+    def load_subreddit_config(self, config_path):
         """Load the subreddit configuration from the JSON file."""
-        with open(path, 'r') as f:
+        with open(config_path, 'r') as f:
             return json.load(f)
 
-    @staticmethod
-    def save_subreddit_config(config):
+    def save_subreddit_config(self, config, config_path):
         """Save the updated subreddit configuration back to the JSON file."""
-        with open(ConfigUtil.config_path, 'w') as f:
+        with open(config_path, 'w') as f:
             json.dump(config, f, indent=4)
 
-    @staticmethod
-    def increment_episode(subreddit_name):
+    def increment_episode(self, subreddit_name, config_path):
         """Increment the episode and update the title in the config."""
-        config = ConfigUtil.load_subreddit_config()
-        
+        config = self.load_subreddit_config(config_path)
+        print(subreddit_name, config)
         if subreddit_name not in config:
             raise ValueError(f"Configuration for subreddit '{subreddit_name}' not found.")
         
@@ -33,13 +37,12 @@ class ConfigUtil:
         config[subreddit_name]["episode"] = new_episode
         
         # Save the updated config back to the file
-        ConfigUtil.save_subreddit_config(config)
+        self.save_subreddit_config(config, config_path)
         
         # Return the incremented episode number
         return new_episode
 
-    @staticmethod
-    def save_metadata(folder, filename, title):
+    def save_metadata(self, folder, filename, title):
         """Save video metadata (original title) in a JSON file."""
         metadata_path = os.path.join(folder, "metadata.json")
 
@@ -57,41 +60,7 @@ class ConfigUtil:
         with open(metadata_path, "w") as f:
             json.dump(metadata, f, indent=4)
             
-    @staticmethod
-    def get_user_config_choice():
-        while True:
-            user_choice = input("Do you want to load the config from file (1) or create your own (2)? ").strip()
-            if user_choice in [LOAD_CONFIG_CHOICE, CREATE_CONFIG_CHOICE]:
-                return user_choice
-            else:
-                print("Invalid choice, please enter '1' to load or '2' to create your own.")
-
-    @staticmethod
-    def prompt_custom_config():
-        subreddit_name = input(f"Enter the subreddit name: ").strip()
-        title = input(f"Enter title for the video: ").strip()
-        description = input(f"Enter description for the video: ").strip()
-        category = input(f"Enter category for the video (e.g., 23): ").strip()
-        privacy = input(f"Enter privacy for the video (e.g., private): ").strip()
-        episode = int(input(f"Enter episode number for the video: ").strip())
-        duration_in_seconds = int(input(f"Enter duration in seconds for the video (e.g., 600): ").strip())
-        publish_day = input(f"Enter publish day for the video (e.g., Monday): ").strip()
-
-        # Returning the config in the format required
-        return {
-            subreddit_name: {
-                "title": title,
-                "description": description,
-                "category": category,
-                "privacy": privacy,
-                "episode": episode,
-                "duration_in_seconds": duration_in_seconds,
-                "publish_day": publish_day
-            }
-        }
-        
-    @staticmethod
-    def prompt_choose_config():
+    def prompt_choose_config(self):
         # List all files in the config directory
         try:
             config_files = [f for f in os.listdir(CONFIG_DIR) if os.path.isfile(os.path.join(CONFIG_DIR, f))]
@@ -113,8 +82,8 @@ class ConfigUtil:
                 choice = int(choice)
                 if 1 <= choice <= len(config_files):
                     ret = os.path.join(CONFIG_DIR, config_files[choice - 1])  # Set the global variable
-                    ConfigUtil.config_path = os.path.join(CONFIG_DIR, config_files[choice - 1])
-                    return ConfigUtil.config_path
+                    self.config_path = os.path.join(CONFIG_DIR, config_files[choice - 1])
+                    return self.config_path
                 else:
                     print("Invalid choice, please select a valid number.")
                     return None
@@ -124,4 +93,3 @@ class ConfigUtil:
         except FileNotFoundError:
             print(f"The directory '{CONFIG_DIR}' does not exist.")
             return None
-                    

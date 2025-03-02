@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from ..handler.upload_handler import authenticate_youtube
 from src.util.upload_scheduler_util import UploadSchedulerUtil
-from ..constants.constants import BATCH_UPLOAD_PATH, OUTPUT_PATH_KEY, UPLOAD_DETAILS_KEY
+from ..constants.constants import BATCH_UPLOAD_PATH, OUTPUT_PATH_KEY, SUBREDDIT_NAME_KEY, UPLOAD_DETAILS_KEY
 from src.controller.upload_controller import upload_controller
 
 
@@ -35,5 +35,5 @@ if __name__ == "__main__":
     youtube_credentials = authenticate_youtube() 
 
     for item in batch_upload:
-        upload_controller(item[OUTPUT_PATH_KEY], item[UPLOAD_DETAILS_KEY], youtube_credentials)
-            
+        # upload_controller(item[SUBREDDIT_NAME_KEY], item[OUTPUT_PATH_KEY], item[UPLOAD_DETAILS_KEY], youtube_credentials)
+        upload_controller(item, youtube_credentials)

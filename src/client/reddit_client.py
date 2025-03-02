@@ -26,6 +26,8 @@ class RedditWrapper:
             user_agent=self.USER_AGENT
         )
         
+        self.config_service = ConfigUtil()
+        
     def get_video_duration(self, url):
         """Retrieve video duration using yt-dlp (returns duration in seconds)."""
         cookies_path = os.path.expanduser("~/yt-reddit-scraper/cookies.txt")  # Expanding the ~ to full path
@@ -99,7 +101,7 @@ class RedditWrapper:
             # Run the command to download the video
             subprocess.run(command, check=True)
             print(f"✅ Downloaded: {url}")
-            ConfigUtil.save_metadata(folder, filename, title)
+            self.config_service.save_metadata(folder, filename, title)
             return True
         except subprocess.CalledProcessError as e:
             print(f"❌ Download failed for {url} | Error: {e}")

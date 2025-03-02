@@ -12,8 +12,8 @@ This bot automates the process of fetching, merging, and preparing Reddit videos
 ## Requirements
 
 - Python 3.8+
-- Reddit API access (if using a wrapper for video fetching)
-- FFmpeg installed (for video merging and encoding)
+- PRAW (Reddit) API access
+- Youtube API Access (https://developers.google.com/youtube/v3)
 
 ## Installation
 
@@ -30,15 +30,15 @@ This bot automates the process of fetching, merging, and preparing Reddit videos
    pip install -r requirements.txt
    ```
 
-3. Set up subreddit configurations in `/configs/subreddit_config.json` following this format:
+3. Set up subreddit configurations in `/configs/<...>.json` following this format:
 
    ```json
    {
        "<Subreddit>": {
            "title": "Some title",
            "description": "Some description",
-           "category": "20",
-           "privacy": "private",
+           "category": "20", // view the categories here - https://gist.github.com/dgp/1b24bf2961521bd75d6c
+           "privacy": "private", // only private is supported
            "episode": 1,
            "duration_in_seconds": 600,
            "publish_day": "Monday"
@@ -66,7 +66,7 @@ REDDIT_USER_AGENT=<...>
    ```
 
 2. The bot will:
-   - Prompt you to load your custom subreddit configs at `/configs` or create one on-demand
+   - Prompt you to load your custom subreddit configs at `/configs` 
    - Fetch and download top videos from each subreddit based on the config.
    - Merge and re-encode the downloaded videos.
    - Save the batch upload details to `batch_upload.json`.
@@ -74,15 +74,16 @@ REDDIT_USER_AGENT=<...>
 3. To upload the processed videos, run:
 
    ```sh
-   python scripts/batch_upload.py
+   python3 -m src.scripts.batch_upload
    ```
 
    This script will read `batch_upload.json` and upload all compiled videos.
 
 ## Configuration
 
-- Modify `src/constants/constants.py` to change paths or settings.
-- Subreddit configurations are managed via `/configs/subreddit_config.json`.
+- There is an episode counter built into the title
+- The videos will have a text overlay with the original Reddit post title 
+- Subreddit configurations are managed via `/configs/<...>.json`.
 
 ## Error Handling
 
