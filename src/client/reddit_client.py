@@ -28,6 +28,8 @@ class RedditWrapper:
             user_agent=self.USER_AGENT
         )
         
+        self.config_service = ConfigUtil()
+        
     def get_video_duration(self, url):
         """Retrieve video duration using yt-dlp (returns duration in seconds)."""
         ydl_opts = {
@@ -100,7 +102,7 @@ class RedditWrapper:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             print(f"✅ Downloaded: {url}")
-            ConfigUtil.save_metadata(folder, filename, title)
+            self.config_service.save_metadata(folder, filename, title)
             return True
         except Exception as e:
             print(f"❌ Download failed for {url} | Error: {e}")
