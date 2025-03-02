@@ -66,8 +66,8 @@ REDDIT_USER_AGENT=<...>
    ```
 
 2. The bot will:
-   - Load subreddit configurations from `/configs/subreddit_config.json`.
-   - Fetch and download top videos from each subreddit.
+   - Prompt you to load your custom subreddit configs at `/configs` or create one on-demand
+   - Fetch and download top videos from each subreddit based on the config.
    - Merge and re-encode the downloaded videos.
    - Save the batch upload details to `batch_upload.json`.
 
