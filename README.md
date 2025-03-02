@@ -7,7 +7,9 @@ This bot automates the process of fetching, merging, and preparing Reddit videos
 - Downloads top videos from specified subreddits.
 - Merges downloaded videos into a single compilation.
 - Stores batch upload details in a JSON file.
+- Adds the reddit title in each clip
 - Automatically increments episode numbers for tracking.
+- Upload schedule logic to post on the nearest day (if you select Monday, it will post next Monday)
 
 ## Requirements
 
@@ -20,8 +22,8 @@ This bot automates the process of fetching, merging, and preparing Reddit videos
 1. Clone this repository:
 
    ```sh
-   git clone https://github.com/your-repo/reddit-video-bot.git
-   cd reddit-video-bot
+   git clone https://github.com/tyler-le/RedditCompilations
+   cd RedditCompilations
    ```
 
 2. Install dependencies:
@@ -47,14 +49,13 @@ This bot automates the process of fetching, merging, and preparing Reddit videos
    ```
 
 
-4. Upload your Google OAuth2 credentials secret in `/configs/config.json` (See https://developers.google.com/youtube/registering_an_application)
+4. Upload your Google OAuth2 client credentials in `/configs/config.json` (See https://developers.google.com/youtube/registering_an_application)
 
 5. Upload your PRAW credentials in `.env`.(See https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
 ```
 REDDIT_CLIENT_ID=<...>
 REDDIT_CLIENT_SECRET=<...>
 REDDIT_USER_AGENT=<...>
-
 ```
 
 ## Usage
@@ -62,22 +63,24 @@ REDDIT_USER_AGENT=<...>
 1. Run the bot:
 
    ```sh
+   cd RedditCompilations
    python main.py
    ```
 
 2. The bot will:
-   - Prompt you to load your custom subreddit configs at `/configs` 
+   - Prompt you to load your custom subreddit configs at `/configs`
    - Fetch and download top videos from each subreddit based on the config.
    - Merge and re-encode the downloaded videos.
-   - Save the batch upload details to `batch_upload.json`.
+   - Save the videos and batch-upload details to `output/`.
 
 3. To upload the processed videos, run:
 
    ```sh
+   cd RedditCompilations
    python3 -m src.scripts.batch_upload
    ```
 
-   This script will read `batch_upload.json` and upload all compiled videos.
+   This script will read from `output/batch_upload.json` and upload all compiled videos.
 
 ## Configuration
 
