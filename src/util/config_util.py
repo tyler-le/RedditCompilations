@@ -1,10 +1,9 @@
 import json
 import os
-from src.constants.constants import CREATE_CONFIG_CHOICE, LOAD_CONFIG_CHOICE
+from src.constants.constants import CREATE_CONFIG_CHOICE, LOAD_CONFIG_CHOICE, CONFIG_DIR
 
 class ConfigUtil:
-    # config_path = "src/configs/subreddit_config.json"
-    config_path = "src/configs/gaming_config.json"
+    config_path = "src/configs/subreddit_config.json"
 
     @staticmethod
     def load_subreddit_config(path=config_path):
@@ -90,4 +89,39 @@ class ConfigUtil:
                 "publish_day": publish_day
             }
         }
+        
+    @staticmethod
+    def prompt_choose_config():
+        # List all files in the config directory
+        try:
+            config_files = [f for f in os.listdir(CONFIG_DIR) if os.path.isfile(os.path.join(CONFIG_DIR, f))]
             
+            if not config_files:
+                print("No configuration files found.")
+                return None
+            
+            # Display the files with a prompt to choose one
+            print("Available configuration files:")
+            for idx, file in enumerate(config_files, start=1):
+                print(f"{idx}. {file}")
+
+            # Ask the user to choose a config file
+            choice = input(f"Choose a configuration file (1-{len(config_files)}): ")
+
+            # Validate the input and return the chosen config file
+            try:
+                choice = int(choice)
+                if 1 <= choice <= len(config_files):
+                    ret = os.path.join(CONFIG_DIR, config_files[choice - 1])  # Set the global variable
+                    ConfigUtil.config_path = os.path.join(CONFIG_DIR, config_files[choice - 1])
+                    return ConfigUtil.config_path
+                else:
+                    print("Invalid choice, please select a valid number.")
+                    return None
+            except ValueError:
+                print("Invalid input, please enter a number.")
+                return None
+        except FileNotFoundError:
+            print(f"The directory '{CONFIG_DIR}' does not exist.")
+            return None
+                    
