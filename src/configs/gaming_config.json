@@ -1,0 +1,29 @@
+{
+    "thefinals": {
+        "title": "THE FINALS GREATEST AND MOST VIEWED CLIPS \ud83e\udd75\ud83e\udd2f #",
+        "description": "Enjoy the greatest clips this week from The Finals",
+        "category": "20",
+        "privacy": "private",
+        "episode": 2,
+        "duration_in_seconds": 600,
+        "publish_day": "Tuesday"
+    },
+    "blackops6": {
+        "title": "BLACK OPS 6 GREATEST AND MOST VIEWED CLIPS \ud83e\udd75\ud83e\udd2f #",
+        "description": "Enjoy the greatest clips this week from Black Ops 6",
+        "category": "20",
+        "privacy": "private",
+        "episode": 2,
+        "duration_in_seconds": 600,
+        "publish_day": "Thursday"
+    },
+    "VALORANT": {
+        "title": "VALORANT GREATEST AND MOST VIEWED CLIPS \ud83e\udd75\ud83e\udd2f #",
+        "description": "Enjoy the greatest clips this week from Valorant",
+        "category": "20",
+        "privacy": "private",
+        "episode": 2,
+        "duration_in_seconds": 600,
+        "publish_day": "Saturday"
+    }
+}

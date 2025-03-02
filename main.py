@@ -10,7 +10,8 @@ if __name__ == "__main__":
     
     if config_choice == LOAD_CONFIG_CHOICE:
         # Load the subreddit configs from file
-        subreddit_details = ConfigUtil.load_subreddit_config()
+        config_path = ConfigUtil.prompt_choose_config()
+        subreddit_details = ConfigUtil.load_subreddit_config(config_path)
     elif config_choice == CREATE_CONFIG_CHOICE:
         # Allow the user to define their own configuration (you can add more logic for this)
         print("Creating a new configuration.")
