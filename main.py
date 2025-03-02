@@ -1,12 +1,25 @@
 import json
-from src.constants.constants import BATCH_UPLOAD_PATH, DURATION_IN_SECONDS_KEY, OUTPUT_PATH_KEY, UPLOAD_DETAILS_KEY
+from src.constants.constants import BATCH_UPLOAD_PATH, CREATE_CONFIG_CHOICE, DURATION_IN_SECONDS_KEY, LOAD_CONFIG_CHOICE, OUTPUT_PATH_KEY, UPLOAD_DETAILS_KEY
 from src.controller.download_controller import download_controller
 from src.controller.merge_controller import merge_controller
 from src.util.config_util import ConfigUtil
 
 if __name__ == "__main__":  
-    # Step 1: Load the subreddit configs
-    subreddit_details = ConfigUtil.load_subreddit_config()  
+    # Step 1: Ask user whether to load the config or create a new one
+    config_choice = ConfigUtil.get_user_config_choice()
+    
+    if config_choice == LOAD_CONFIG_CHOICE:
+        # Load the subreddit configs from file
+        subreddit_details = ConfigUtil.load_subreddit_config()
+    elif config_choice == CREATE_CONFIG_CHOICE:
+        # Allow the user to define their own configuration (you can add more logic for this)
+        print("Creating a new configuration.")
+        subreddit_details = ConfigUtil.prompt_custom_config()  
+    else:
+        # If user chooses 'n', just proceed without loading the config
+        print("Skipping config loading.")
+        subreddit_details = {}
+
     batch_uploads = []
 
     for subreddit_name, upload_details in subreddit_details.items():

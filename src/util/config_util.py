@@ -1,9 +1,10 @@
 import json
 import os
-from src.util.upload_scheduler_util import UploadSchedulerUtil
+from src.constants.constants import CREATE_CONFIG_CHOICE, LOAD_CONFIG_CHOICE
 
 class ConfigUtil:
-    config_path = "src/configs/subreddit_config.json"
+    # config_path = "src/configs/subreddit_config.json"
+    config_path = "src/configs/gaming_config.json"
 
     @staticmethod
     def load_subreddit_config(path=config_path):
@@ -56,3 +57,37 @@ class ConfigUtil:
         # Save the updated metadata back to the JSON file
         with open(metadata_path, "w") as f:
             json.dump(metadata, f, indent=4)
+            
+    @staticmethod
+    def get_user_config_choice():
+        while True:
+            user_choice = input("Do you want to load the config from file (1) or create your own (2)? ").strip()
+            if user_choice in [LOAD_CONFIG_CHOICE, CREATE_CONFIG_CHOICE]:
+                return user_choice
+            else:
+                print("Invalid choice, please enter '1' to load or '2' to create your own.")
+
+    @staticmethod
+    def prompt_custom_config():
+        subreddit_name = input(f"Enter the subreddit name: ").strip()
+        title = input(f"Enter title for the video: ").strip()
+        description = input(f"Enter description for the video: ").strip()
+        category = input(f"Enter category for the video (e.g., 23): ").strip()
+        privacy = input(f"Enter privacy for the video (e.g., private): ").strip()
+        episode = int(input(f"Enter episode number for the video: ").strip())
+        duration_in_seconds = int(input(f"Enter duration in seconds for the video (e.g., 600): ").strip())
+        publish_day = input(f"Enter publish day for the video (e.g., Monday): ").strip()
+
+        # Returning the config in the format required
+        return {
+            subreddit_name: {
+                "title": title,
+                "description": description,
+                "category": category,
+                "privacy": privacy,
+                "episode": episode,
+                "duration_in_seconds": duration_in_seconds,
+                "publish_day": publish_day
+            }
+        }
+            
