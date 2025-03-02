@@ -56,7 +56,7 @@ class RedditWrapper:
 
         subreddit = self.reddit.subreddit(subreddit_name)
 
-        for post in subreddit.hot():
+        for post in subreddit.top("week"):
             if not post.is_video:
                 continue
             print(f"🎬 Found video: {post.title}")
